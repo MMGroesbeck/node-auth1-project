@@ -10,6 +10,7 @@ router.post("/", (req, res) => {
         .then(([thisUser]) => {
             if (thisUser && bcrypt.compareSync(password, thisUser.password)) {
                 req.session.loggedIn = true;
+                req.session.loggedInAs = thisUser.username;
                 res.status(200).json({ message: "Welcome!" });
             } else {
                 res.status(401).json({ message: "Not authenticated." });
